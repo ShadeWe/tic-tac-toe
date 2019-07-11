@@ -1,0 +1,47 @@
+#game-field {
+	user-select: none;
+	-moz-user-select: none;
+	width: 500px;
+	height: 500px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -250px;
+	margin-left: -250px;
+	background-color: rgb(227, 248, 250);
+}
+
+.lg-cell {
+	border: 1px solid rgb(203, 203, 203);
+	display: inline-block;
+	background-color: rgb(203, 247, 255);
+	width: 140px;
+	height: 140px;
+	margin-left: 16px;
+	margin-top: 16px;
+	transition: background 0.3s;
+}
+
+.sm-cell {
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	background-color: rgb(255, 191, 218);
+	width: 40px;
+	height: 40px;
+	margin-top: 3px;
+	margin-left: 3px;
+	transition-duration: 0.2s;
+}
+.sm-cell p {
+	font-family: Arial;
+	position: absolute;
+	line-height: 10px;
+	left: 12px;
+}
+.sm-cell:hover {
+	background-color: rgb(231, 158, 189);
+}
+.sm-cell:active {
+	background-color: rgb(203, 123, 157);
+}

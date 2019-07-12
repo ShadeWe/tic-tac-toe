@@ -11,6 +11,25 @@
 	background-color: rgb(227, 248, 250);
 }
 
+.won-cell {
+	position: relative;
+	border: 1px solid rgb(203, 203, 203);
+	display: inline-block;
+	background-color: rgb(203, 247, 255);
+	width: 140px;
+	height: 140px;
+	margin-left: 16px;
+	margin-top: 16px;
+}
+.won-cell p {
+	font-family: Arial;
+	font-size: 160px;
+	margin: 0;
+	position: absolute;
+	top: -20px;
+	left: 10px;
+}
+
 .lg-cell {
 	border: 1px solid rgb(203, 203, 203);
 	display: inline-block;

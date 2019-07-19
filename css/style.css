@@ -1,3 +1,7 @@
+html, body {
+	margin: 0;
+}
+
 #game-field {
 	user-select: none;
 	-moz-user-select: none;
@@ -63,4 +67,54 @@
 }
 .sm-cell:active {
 	background-color: rgb(203, 123, 157);
+}
+
+#pop-up-message span {
+	font-size: 80px;
+}
+#pop-up-message p {
+	font-weight: bold;
+	margin: 0;
+	font-size: 15px;
+}
+
+#pop-up-message button {
+	margin-top: 20px;
+	background-color: #717171;
+	border: none;
+	color: white;
+	padding: 15px 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+#pop-up-message {
+	opacity: 0;
+	text-align: center;
+	font-family: Arial;
+	position: absolute;
+	z-index: 2;
+	width: 400px;
+	height: 200px;
+	background-color: rgb(177, 201, 255);
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -200px;
+	display: none;
+	transition-duration: 1s;
+}
+
+#background {
+	opacity: 0;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: rgb(0, 0, 0);
+	z-index: 1;
+	display: none;
+	transition-duration: 1s;
 }

@@ -43,6 +43,7 @@ function markFieldAsWon(largeCell_id, sign)
 {
 	largeCells[largeCell_id].innerHTML = "<p>" + sign + "</p>";
 	largeCells[largeCell_id].className = 'lg-cell won-cell';
+	largeCells[largeCell_id].setAttribute('clear', 'false');
 	fieldsWon[largeCell_id] = true;
 }
 
@@ -50,39 +51,67 @@ function markFieldAsWon(largeCell_id, sign)
  * Takes the number of a large cell which a player has made a move in
  * and checks if a player has won a large cell
  * if it's true, mark it with a big 'O' or 'X' sign
- * largeCell - the cell which is being checked for being won
+ * largeCell - the cell's id which is being checked for being won
  */
-function checkForWin(largeCell)
-{
-	// checking for winning horizontaly
-	for (let i = 0; i < 8; i = i + 3) {
-		if (cells[largeCell][i].textContent != '' && cells[largeCell][i + 1].textContent != '' && cells[largeCell][i + 2].textContent != '') {
-			if (cells[largeCell][i].textContent == cells[largeCell][i + 1].textContent && cells[largeCell][i + 1].textContent == cells[largeCell][i + 2].textContent) {
-				return markFieldAsWon(largeCell, cells[largeCell][i].textContent); // passing largeCell id and the sign which has just won the field
+ function checkForWin(grid, largeCell, gamewincheck = false)
+ {
+    // checking for winning horizontaly
+    for (let i = 0; i < 8; i = i + 3) {
+        if (grid[largeCell][i].getAttribute('clear') == 'false' && grid[largeCell][i + 1].getAttribute('clear') == 'false' && grid[largeCell][i + 2].getAttribute('clear') == 'false') {
+            if (grid[largeCell][i].textContent == grid[largeCell][i + 1].textContent && grid[largeCell][i + 1].textContent == grid[largeCell][i + 2].textContent) {
+                if (gamewincheck == false) return markFieldAsWon(largeCell, grid[largeCell][i].textContent); // passing largeCell id and the sign which has just won the field
+				else return GameOver(grid[largeCell][i].textContent);
 			}
-		}
-	}
+        }
+    }
 
-	// checking for winning vertically
-	for (let i = 0; i < 3; i++) {
-		if (cells[largeCell][i].textContent != '' && cells[largeCell][i + 3].textContent != '' && cells[largeCell][i + 6].textContent != '') {
-			if (cells[largeCell][i].textContent == cells[largeCell][i + 3].textContent && cells[largeCell][i + 3].textContent == cells[largeCell][i + 6].textContent) {
-				return markFieldAsWon(largeCell, cells[largeCell][i].textContent); // passing largeCell id and the sign which has just won the field
-			}
-		}
-	}
-	// checking for winning diagonally from the left top corner to the right bottom one
-	if (cells[largeCell][0].textContent != '' && cells[largeCell][4].textContent != '' && cells[largeCell][8].textContent != '') {
-		if (cells[largeCell][0].textContent == cells[largeCell][4].textContent && cells[largeCell][4].textContent == cells[largeCell][8].textContent) {
-			return markFieldAsWon(largeCell, cells[largeCell][0].textContent); // passing largeCell id and the sign which has just won the field
-		}
-	}
-	// checking for winning diagonally from the right top corner to the left bottom one
-	if (cells[largeCell][2].textContent != '' && cells[largeCell][4].textContent != '' && cells[largeCell][6].textContent != '') {
-		if (cells[largeCell][2].textContent == cells[largeCell][4].textContent && cells[largeCell][4].textContent == cells[largeCell][6].textContent) {
-			return markFieldAsWon(largeCell, cells[largeCell][2].textContent); // passing largeCell id and the sign which has just won the field
-		}
-	}
+    // checking for winning vertically
+    for (let i = 0; i < 3; i++) {
+        if (grid[largeCell][i].getAttribute('clear') == 'false' && grid[largeCell][i + 3].getAttribute('clear') == 'false' && grid[largeCell][i + 6].getAttribute('clear') == 'false') {
+            if (grid[largeCell][i].textContent == grid[largeCell][i + 3].textContent && grid[largeCell][i + 3].textContent == grid[largeCell][i + 6].textContent) {
+				if (gamewincheck == false) return markFieldAsWon(largeCell, grid[largeCell][i].textContent); // passing largeCell id and the sign which has just won the field
+				else return GameOver(grid[largeCell][i].textContent);
+            }
+        }
+    }
+    // checking for winning diagonally from the left top corner to the right bottom one
+    if (grid[largeCell][0].getAttribute('clear') == 'false' && grid[largeCell][4].getAttribute('clear') == 'false' && grid[largeCell][8].getAttribute('clear') == 'false') {
+        if (grid[largeCell][0].textContent == grid[largeCell][4].textContent && grid[largeCell][4].textContent == grid[largeCell][8].textContent) {
+			if (gamewincheck == false) return markFieldAsWon(largeCell, grid[largeCell][0].textContent); // passing largeCell id and the sign which has just won the field
+			else return GameOver(grid[largeCell][0].textContent);
+        }
+    }
+    // checking for winning diagonally from the right top corner to the left bottom one
+    if (grid[largeCell][2].getAttribute('clear') == 'false' && grid[largeCell][4].getAttribute('clear') == 'false' && grid[largeCell][6].getAttribute('clear') == 'false') {
+        if (grid[largeCell][2].textContent == grid[largeCell][4].textContent && grid[largeCell][4].textContent == grid[largeCell][6].textContent) {
+			if (gamewincheck == false) return markFieldAsWon(largeCell, grid[largeCell][2].textContent); // passing largeCell id and the sign which has just won the field
+			else return GameOver(grid[largeCell][2].textContent);
+        }
+    }
+ }
+
+/*
+ * 	Is called when a player won the game, and simply creates a window with a message that someone's has won the game and 'try-again' button
+ * 	player - the player that's won the game
+ *
+ */
+function GameOver(player)
+{
+	var messageWindow = document.getElementById('pop-up-message');
+	var messageItself = document.getElementById('message');
+	var background = document.getElementById('background');
+
+	background.style.display = 'block';
+	setTimeout(function(){
+		background.style.opacity = '0.7';
+	}, 100);
+
+	messageItself.innerHTML = '<span>' + player + '</span><br \><p> HAS WON THIS GAME<p>';
+
+	messageWindow.style.display = 'block';
+	setTimeout(function(){
+		messageWindow.style.opacity = '1';
+	}, 100);
 }
 
 /*
@@ -113,27 +142,34 @@ function appendEventListeners(cells)
 						// the step was made by the 'X' player
 						if (currentPlayer == 'X') {
 							cells[i][j].innerHTML = '<p>X</p>';
+							cells[i][j].setAttribute('clear', 'false');
 							currentPlayer = 'O'; // the next move is for 'O'
 						}
 						// the step was made by the 'O' player
 						else if (currentPlayer == 'O') {
 							cells[i][j].innerHTML = '<p>O</p>';
+							cells[i][j].setAttribute('clear', 'false');
 							currentPlayer = 'X'; // the next move is for 'X'
 						}
-
-						// if it's not the first move in the game, and if it's not a free move for the opposite player (-2)
-						if (correctStep != -1 && correctStep != -2) checkForWin(correctStep);	// checking if a player has won a large cell
+						// if it's not the first move in the game, and if it's not a free move (-2)
+						if (correctStep != -1 && correctStep != -2) checkForWin(cells, correctStep);	// checking if a player has won a large cell
 						// if it's a free move, we still need to check for winning
-						else if (correctStep == -2) checkForWin(i);								// checking if a player has won a large cell
+						else if (correctStep == -2) checkForWin(cells, i);								// checking if a player has won a large cell
 
-						if (fieldsWon[j] != true) {
+						// fieldsWon[j] contains the field for the opposite player to move, and if this field isn't won yet, highlight it and force the opposite player to move here.
+						if (fieldsWon[j] == false) {
 							largeCells[j].style.backgroundColor = "rgb(160, 231, 244)"; 	// highlightning the correct large cell for the next move
 							correctStep = j;
+						// if it turned out that the field the opposite player forced to move in is already won, he/she can make his move anywhere, according to the game rules.
 						} else {
 							// the move has been made in a small cell refering the opposite player to the field which is already won, letting him to move anywhere.
 							largeCells[j].style.backgroundColor = "rgb(203, 247, 255)"; 	// resetting highlightning
 							correctStep = -2;
 						}
+
+						// checking the whole game for being won
+						checkForWin([largeCells], 0, true);
+
 					}
 				}
 			});

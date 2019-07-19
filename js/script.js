@@ -55,6 +55,19 @@ function markFieldAsWon(largeCell_id, sign)
  */
  function checkForWin(grid, largeCell, gamewincheck = false)
  {
+
+	 // checking for a field with a draw (since there's a field with a draw, we cannot move there)
+	 if (gamewincheck == false) {
+		 var counter = 0;
+		 for (let i = 0; i < 8; i++) {
+			 if (grid[largeCell][i].getAttribute('clear') == 'false')
+				 counter++;
+		 }
+		 if (counter == 8)
+			 fieldsWon[largeCell] = true;
+	 }
+
+
     // checking for winning horizontaly
     for (let i = 0; i < 8; i = i + 3) {
         if (grid[largeCell][i].getAttribute('clear') == 'false' && grid[largeCell][i + 1].getAttribute('clear') == 'false' && grid[largeCell][i + 2].getAttribute('clear') == 'false') {

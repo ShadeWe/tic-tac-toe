@@ -101,6 +101,11 @@ function markFieldAsWon(largeCell_id, sign)
 			else return GameOver(grid[largeCell][2].textContent);
         }
     }
+
+	// checking the whole game for a draw
+	if (fieldsWon.find(function(field) {return field == false}) == undefined) {
+		GameOver('nobody', true);
+	}
  }
 
 /*
@@ -108,7 +113,7 @@ function markFieldAsWon(largeCell_id, sign)
  * 	player - the player that's won the game
  *
  */
-function GameOver(player)
+function GameOver(player, draw = false)
 {
 	var messageWindow = document.getElementById('pop-up-message');
 	var messageItself = document.getElementById('message');
@@ -119,7 +124,10 @@ function GameOver(player)
 		background.style.opacity = '0.7';
 	}, 100);
 
-	messageItself.innerHTML = '<span>' + player + '</span><br \><p> HAS WON THIS GAME<p>';
+	if (draw != true)
+		messageItself.innerHTML = '<span>' + player + '</span><br \><p> HAS WON THIS GAME<p>';
+	else
+		messageItself.innerHTML = "<span>" + player + "</span><p>IT 'S A DRAW</p>";
 
 	messageWindow.style.display = 'block';
 	setTimeout(function(){

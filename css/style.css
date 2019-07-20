@@ -71,11 +71,12 @@ html, body {
 
 #pop-up-message span {
 	font-size: 80px;
+	height: 80px;
 }
 #pop-up-message p {
-	font-weight: bold;
 	margin: 0;
-	font-size: 15px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #pop-up-message button {
